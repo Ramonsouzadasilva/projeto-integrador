@@ -1,8 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-class ReservaRepository implements IRepository {}
-=======
 require_once 'src/model/reserva.php';
 require_once 'src/model/mesa.php';
 
@@ -55,4 +52,3 @@ class ReservaRepository
         return $stmt->fetchAll();
     }
 }
->>>>>>> dev

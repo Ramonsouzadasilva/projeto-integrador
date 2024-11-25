@@ -1,27 +1,5 @@
 <?php
 require_once 'vendor/autoload.php';
-<<<<<<< HEAD
-
-use \phputil\router\Router;
-
-$app = new Router();
-
-$pdo = conectar();
-
-$app->get('/', function ($req, $res) use ($pdo) {
-    $res->send('Bem vindo ao sistema de Reservas!');
-});
-
-
-$app->get('/reservas', function ($req, $res)  use ($pdo) {
-    $res->json();
-});
-
-
-$app->post('/reservas', function ($req, $res) use ($pdo) {
-    $dados = (array) $req->body();
-});
-=======
 require_once 'src/database/conexao.php';
 require_once 'src/routes/reserva-routes.php';
 
@@ -120,6 +98,5 @@ $app = new Router();
 // Conectar ao banco de dados
 $pdo = conectar();
 defineRoutes($app, $pdo);
->>>>>>> dev
 
 $app->listen();
