@@ -47,9 +47,6 @@ CREATE TABLE reservas (
     CONSTRAINT UC_Reserva UNIQUE (data, hora_inicio, mesa_id)  
 ) ENGINE=InnoDB;
 
-<<<<<<< HEAD
-
-=======
 -- TESTE DE SQL
 
 USE db_reserva;
@@ -81,4 +78,3 @@ CREATE TABLE reservas (
     FOREIGN KEY (mesa_id) REFERENCES mesas(id),
     FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id)
 )ENGINE=InnoDB;
->>>>>>> dev
