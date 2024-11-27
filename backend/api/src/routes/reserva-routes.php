@@ -27,7 +27,8 @@ function defineRoutes($app, $pdo)
         $hora_fim = $data_fim[1];
 
         // Verificar disponibilidade da mesa
-        $stmt = $pdo->prepare("SELECT * FROM reservas WHERE mesa_id = ? AND ((data = ? AND hora_inicio BETWEEN ? AND ?) OR (data = ? AND hora_fim BETWEEN ? AND ?))");
+        $stmt = $pdo->prepare("SELECT * FROM reservas WHERE mesa_id = ? 
+        AND ((data = ? AND hora_inicio BETWEEN ? AND ?) OR (data = ? AND hora_fim BETWEEN ? AND ?))");
         $stmt->execute([$dados['mesa_id'], $data_inicio, $hora_inicio, $hora_fim, $data_fim, $hora_inicio, $hora_fim]);
 
         if ($stmt->rowCount() > 0) {

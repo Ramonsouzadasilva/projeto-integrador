@@ -4,21 +4,23 @@
 class Reserva
 {
     public $id;
-    public $clienteNome;
-    public $mesaId;
-    public $dataHoraInicio;
-    public $dataHoraFim;
-    public $funcionarioId;
+    public $nomeCliente;
+    public $mesa;
+    public $data;
+    public $horaInicial;
+    public $horaTermino;
+    public $funcionario;
     public $status;
 
-    public function __construct($id, $clienteNome, $mesaId, $dataHoraInicio, $dataHoraFim, $funcionarioId, $status = 'ativo')
+    public function __construct($id, $nomeCliente, $mesa, $data, $horaInicial, $horaTermino, $funcionario, $status = 'ativo')
     {
         $this->id = $id;
-        $this->clienteNome = $clienteNome;
-        $this->mesaId = $mesaId;
-        $this->dataHoraInicio = $dataHoraInicio;
-        $this->dataHoraFim = $dataHoraFim;
-        $this->funcionarioId = $funcionarioId;
+        $this->nomeCliente = $nomeCliente;
+        $this->mesa = $mesa;
+        $this->data = $data;
+        $this->horaInicial = $horaInicial;
+        $this->horaTermino = $horaTermino;
+        $this->funcionario = $funcionario;
         $this->status = $status;
     }
 }

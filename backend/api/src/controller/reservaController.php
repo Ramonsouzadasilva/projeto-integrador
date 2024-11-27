@@ -1,7 +1,7 @@
 <?php
 
-require_once 'src/repository/reservaRepository.php';
-require_once 'src/repository/mesarepository.php';
+require_once 'src/repository/reserva/reservaRepository.php';
+require_once 'src/repository/mesa/mesarepository.php';
 
 class ReservaController
 {
@@ -20,40 +20,37 @@ class ReservaController
     {
         $dados = (array) $req->body();
 
-        if (!isset($dados['nome_cliente'], $dados['data_inicio'], $dados['data_fim'], $dados['mesa_id'], $dados['funcionario_id'])) {
+        // Verifique se todas as chaves estão presentes
+        if (!isset($dados['nomeCliente'], $dados['data'], $dados['horarioInicial'], $dados['horarioTermino'], $dados['mesa'], $dados['funcionario'])) {
             return $res->json(['status' => 'error', 'message' => 'Dados faltando'], 400);
         }
 
-        $data_inicio = explode(' ', $dados['data_inicio']);
-        $data_fim = explode(' ', $dados['data_fim']);
-
-        // Logic to separate date and time
-        $data_inicio = $data_inicio[0];
-        $hora_inicio = $data_inicio[1];
-
-        $data_fim = $data_fim[0];
-        $hora_fim = $data_fim[1];
-
-        // Check availability
-        if ($this->reservaRepo->verificarDisponibilidade($dados['mesa_id'], $data_inicio, $hora_inicio, $data_fim, $hora_fim)) {
+        // Verificar disponibilidade
+        if ($this->reservaRepo->verificarDisponibilidade(
+            $dados['mesa'],
+            $dados['data'],
+            $dados['horarioInicial'],
+            $dados['horarioTermino'],
+        )) {
             return $res->json(['status' => 'error', 'message' => 'Mesa não disponível para o horário solicitado'], 400);
         }
 
+        // Criar nova reserva
         $reserva = new Reserva(
-            $dados['nome_cliente'],
-            $data_inicio,
-            $hora_inicio,
-            $data_fim,
-            $hora_fim,
-            $dados['mesa_id'],
-            $dados['funcionario_id']
+            null, // id é auto-incremento, então passa null
+            $dados['nomeCliente'],
+            $dados['mesa'],
+            $dados['data'],
+            $dados['horarioInicial'],
+            $dados['horarioTermino'],
+            $dados['funcionario']
         );
 
-        // Save reservation
+        // Salvar reserva no banco de dados
         $this->reservaRepo->salvarReserva($reserva);
 
-        // Update table status
-        $this->mesaRepo->atualizarStatusMesa($dados['mesa_id'], false);
+        // Atualizar o status da mesa para não disponível
+        $this->mesaRepo->atualizarStatusMesa($dados['mesa'], false);
 
         return $res->json(['status' => 'success', 'message' => 'Reserva realizada com sucesso']);
     }
@@ -61,8 +58,9 @@ class ReservaController
     public function listarReservas($req, $res)
     {
         $reservas = $this->reservaRepo->listarReservas();
-        return $res->json($reservas);
+        return $res->json($reservas);  // Retorna as reservas como JSON
     }
+
 
     public function cancelarReserva($req, $res)
     {
@@ -70,10 +68,10 @@ class ReservaController
         $this->reservaRepo->cancelarReserva($id);
 
         // Update table status
-        $stmt = $this->pdo->prepare("SELECT mesa_id FROM reservas WHERE id = ?");
+        $stmt = $this->pdo->prepare("SELECT mesa FROM reservas WHERE id = ?");
         $stmt->execute([$id]);
-        $mesa_id = $stmt->fetchColumn();
-        $this->mesaRepo->atualizarStatusMesa($mesa_id, true);
+        $mesa = $stmt->fetchColumn();
+        $this->mesaRepo->atualizarStatusMesa($mesa, true);
 
         return $res->json(['status' => 'success', 'message' => 'Reserva cancelada']);
     }
