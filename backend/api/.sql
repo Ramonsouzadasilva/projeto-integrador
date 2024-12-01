@@ -49,20 +49,20 @@ CREATE TABLE reservas (
 
 -- TESTE DE SQL
 
-USE db_reserva;
+USE dbreserva;
 
 -- Tabela de Funcionários (Usuários)
 CREATE TABLE funcionarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    username VARCHAR(100) NOT NULL UNIQUE,
+    usuario VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 
 -- Tabela de Mesas
 CREATE TABLE mesas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    numero INT NOT NULL,
+    numero INT NOT NULL UNIQUE,
     disponivel BOOLEAN DEFAULT TRUE
 )ENGINE=InnoDB;
 
@@ -71,9 +71,10 @@ CREATE TABLE reservas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome_cliente VARCHAR(255) NOT NULL,
     data_inicio DATETIME NOT NULL,
-    data_fim DATETIME NOT NULL,
-    mesa_id INT,
-    funcionario_id INT,
+    hora_inicio DATETIME NOT NULL,
+    hora_fim DATETIME NOT NULL,
+    mesa INT UNIQUE,
+    funcionario INT,
     status ENUM('confirmada', 'cancelada', 'pendente') DEFAULT 'confirmada',
     FOREIGN KEY (mesa_id) REFERENCES mesas(id),
     FOREIGN KEY (funcionario_id) REFERENCES funcionarios(id)

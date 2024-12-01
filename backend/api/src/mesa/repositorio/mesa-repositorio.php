@@ -11,7 +11,7 @@ class MesaRepository
 
     public function atualizarStatusMesa($mesa_id, $status)
     {
-        $stmt = $this->pdo->prepare("UPDATE mesas SET disponivel = ? WHERE id = ?");
+        $stmt = $this->pdo->prepare("UPDATE mesa SET disponivel = ? WHERE id = ?");
         $stmt->execute([$status, $mesa_id]);
     }
 }
