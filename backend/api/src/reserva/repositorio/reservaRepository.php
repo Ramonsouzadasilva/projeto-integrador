@@ -1,7 +1,7 @@
 <?php
 
-require_once 'src/model/reserva.php';
-require_once 'src/model/mesa.php';
+require_once 'src/reserva/model/reserva.php';
+require_once 'src/mesa/model/mesa.php';
 
 class ReservaRepository
 {
@@ -54,13 +54,29 @@ class ReservaRepository
 
     public function cancelarReserva($id)
     {
-        $stmt = $this->pdo->prepare("UPDATE reserva SET status = 'cancelada' WHERE id = ?");
-        $stmt->execute([$id]);
+        try {
+            $sql = "UPDATE reserva SET status = 'cancelada' WHERE id = :id";
+            $ps = $this->pdo->prepare($sql);
+            $ps->execute(['id' => $id]);
+        } catch (Exception $e) {
+            // Log any exception during execution
+            error_log("Error in cancelarReserva: " . $e->getMessage());
+            throw $e;  // Re-throw exception to be handled by controller
+        }
+    }
+
+    // Método para buscar a reserva pelo ID
+    public function buscarReservaPorId($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM reservas WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+        // Retorna o resultado ou null se não encontrado
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
     public function listarReservas()
     {
-        $stmt = $this->pdo->query("SELECT * FROM reserva WHERE inicio_reserva >= NOW() ORDER BY inicio_reserva ASC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Usando fetchAll(PDO::FETCH_ASSOC)
+        $stmt = $this->pdo->query("SELECT * FROM reserva ORDER BY inicio_reserva ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

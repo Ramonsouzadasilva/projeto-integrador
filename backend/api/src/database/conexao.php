@@ -1,6 +1,6 @@
 <?php
 
-function conectar()
+function conectar(): PDO
 {
     return new PDO(
         'mysql:dbname=dbreservas;host=localhost;charset=utf8',
