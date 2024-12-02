@@ -1,6 +1,6 @@
 <?php
 
-require_once 'src/reserva/repositorio/reservaRepository.php';
+require_once 'src/reserva/repositorio/repositorio-reserva.php';
 require_once 'src/mesa/repositorio/mesa-repositorio.php';
 require_once 'src/infra/DominioException.php';
 require_once 'src/infra/NaoEncontradoException.php';
@@ -102,43 +102,4 @@ class ReservaController
 
         return $res->json(['status' => 'success', 'message' => 'Reserva cancelada']);
     }
-
-    // public function cancelarReserva($req, $res)
-    // {
-    //     $id = (int) $req->param("id");
-
-    //     // Verifica se o ID é válido
-    //     if (empty($id) || !is_numeric($id) || $id <= 0) {
-    //         error_log("Invalid ID: $id");
-    //         return $res->json(['status' => 'error', 'message' => 'ID inválido.'], 400);
-    //     }
-
-    //     try {
-    //         // Verificar se a reserva existe no banco de dados
-    //         $reserva = $this->reservaRepo->buscarReservaPorId($id);
-
-    //         if (!$reserva) {
-    //             // Se a reserva não for encontrada, lançar a exceção NaoEncontradoException
-    //             throw new NaoEncontradoException("Reserva com ID $id não encontrada.");
-    //         }
-
-    //         // Se a reserva for encontrada, proceder com o cancelamento
-    //         $this->reservaRepo->cancelarReserva($id);
-
-    //         return $res->json(['status' => 'success', 'message' => 'Reserva cancelada com sucesso']);
-    //     } catch (NaoEncontradoException $e) {
-    //         // Captura a exceção e retorna um erro 404 (Não Encontrado)
-    //         return $res->json([
-    //             'status' => 'error',
-    //             'message' => $e->getMessage()
-    //         ], 404);
-    //     } catch (\Exception $e) {
-    //         // Captura qualquer outra exceção e retorna um erro 500 (Erro Interno)
-    //         return $res->json([
-    //             'status' => 'error',
-    //             'message' => 'Erro interno',
-    //             'details' => $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
 }

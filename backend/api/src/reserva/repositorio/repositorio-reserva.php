@@ -38,8 +38,6 @@ class ReservaRepository
         return count($resultados) > 0;
     }
 
-
-
     public function salvarReserva(Reserva $reserva)
     {
         $stmt = $this->pdo->prepare("INSERT INTO reserva (nome_cliente, data_reservada, inicio_reserva, 
@@ -78,7 +76,12 @@ class ReservaRepository
 
     public function listarReservas()
     {
-        $stmt = $this->pdo->query("SELECT * FROM reserva ORDER BY inicio_reserva ASC");
+        // $stmt = $this->pdo->query("SELECT * FROM reserva");
+        $stmt = $this->pdo->query("
+        SELECT reserva.id, reserva.nome_cliente, reserva.data_reservada, reserva.inicio_reserva, reserva.fim_reserva, reserva.mesa, reserva.status, funcionario.nome AS nome_funcionario
+        FROM reserva
+        JOIN funcionario ON reserva.funcionario = funcionario.id
+    ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
