@@ -19,6 +19,7 @@ class ReservaController
         $this->mesaRepo = new MesaRepository($pdo);
     }
 
+
     public function criarReserva($req, $res)
     {
         // Obtém os dados do corpo da requisição
@@ -30,7 +31,7 @@ class ReservaController
         }
 
         // Verifique se todas as chaves estão presentes
-        if (!isset($dados['nomeCliente'], $dados['data'], $dados['horarioInicial'], $dados['horarioTermino'], $dados['mesa'], $dados['funcionario'])) {
+        if (!isset($dados['nomeCliente'], $dados['data'], $dados['horarioInicial'], $dados['mesa'], $dados['funcionario'])) {
             return $res->json(['status' => 'error', 'message' => 'Dados faltando'], 400);
         }
 
@@ -41,7 +42,6 @@ class ReservaController
             $dados['mesa'],
             $dados['data'],
             $dados['horarioInicial'],
-            $dados['horarioTermino'],
             $dados['funcionario']
         );
 

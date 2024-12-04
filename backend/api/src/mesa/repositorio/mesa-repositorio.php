@@ -14,4 +14,12 @@ class MesaRepository
         $stmt = $this->pdo->prepare("UPDATE mesa SET disponivel = ? WHERE id = ?");
         $stmt->execute([$status, $mesa_id]);
     }
+
+    public function listarMesas()
+    {
+        $sql = "SELECT * from mesa";
+        $stmt = $this->pdo->query($sql);
+        $mesas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $mesas;
+    }
 }
