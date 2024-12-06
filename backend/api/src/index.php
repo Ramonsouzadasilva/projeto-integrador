@@ -6,6 +6,7 @@ require_once './database/conexao.php';
 require_once './mesa/mesa-controller.php';
 require_once './mesa/rotas-mesa.php';
 require_once './reserva/rotas-reserva.php';
+require_once './funcionario/rotas-funcionario.php';
 
 use phputil\router\Router;
 
@@ -44,5 +45,6 @@ $app->get('/', function ($req, $res) {
 
 criarRotasReserva($app, $pdo);
 criarRotasMesa($app, $pdo);
+criarRotasFuncionario($app, $pdo);
 
 $app->listen();

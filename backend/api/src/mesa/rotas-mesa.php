@@ -8,4 +8,8 @@ function criarRotasMesa($app, PDO $pdo)
     $app->get('/mesas', function ($req, $res) use ($mesaController) {
         $mesaController->listarMesas($req, $res);
     });
+
+    $app->get('/mesas-disponiveis', function ($req, $res) use ($mesaController) {
+        $mesaController->listarMesasDisponiveis($req, $res);
+    });
 }
