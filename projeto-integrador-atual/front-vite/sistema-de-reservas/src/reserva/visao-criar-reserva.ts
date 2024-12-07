@@ -31,8 +31,6 @@ export class VisaoCriarReservas {
     // Adiciona o evento de submit ao formulário
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-
-      // Chama o método de criar reserva
       this.controladoraReserva.criarReserva();
     });
   }
@@ -75,7 +73,7 @@ export class VisaoCriarReservas {
       listaDeReservas.innerHTML = `
         <p>Reserva confirmada!</p>
         <p>Cliente: ${reserva.nomeCliente}</p>
-        <p>Mesa: ${reserva.mesaId}</p>
+        <p>Mesa: ${reserva.mesa}</p>
         <p>Data: ${reserva.data}</p>
         <p>Hora: ${reserva.horarioInicial}</p>
       `;
@@ -88,7 +86,7 @@ export class VisaoCriarReservas {
   }
 
   // Captura os dados do formulário e os envia para a controladora de reserva
-  capturarDadosFormulario(): Reserva {
+  capturarDadosFormulario() {
     const nomeCliente = (document.getElementById("nome") as HTMLInputElement)
       .value;
     const mesaId = (document.getElementById("mesa") as HTMLSelectElement).value;
@@ -102,10 +100,10 @@ export class VisaoCriarReservas {
 
     return {
       nomeCliente,
-      mesaId,
+      mesa: Number(mesaId),
       data,
       horarioInicial,
-      funcionarioId: Number(funcionarioId),
+      funcionario: Number(funcionarioId),
     };
   }
 }

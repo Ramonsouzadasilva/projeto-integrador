@@ -1,8 +1,8 @@
 // Interface de Reserva para listar
 export interface ReservaListar {
-  id: number;
+  id: string;
   nomeCliente: string;
-  mesa: number; // A mesa é um número agora
+  mesa: string;
   data: string;
   horarioInicial: string;
   horarioTermino: string;

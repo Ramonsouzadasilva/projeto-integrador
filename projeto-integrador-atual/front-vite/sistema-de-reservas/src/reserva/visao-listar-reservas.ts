@@ -18,7 +18,7 @@ export class VisaoListarReservas {
    */
   desenharReservas(reservas: ReservaListar[]): void {
     const tbody = document.querySelector("tbody") as HTMLElement;
-    tbody.innerText = "";
+    tbody.innerText = ""; // Limpa a tabela
     const fragmento = document.createDocumentFragment();
 
     reservas.forEach((reserva) => {
@@ -26,7 +26,7 @@ export class VisaoListarReservas {
       fragmento.append(linha);
     });
 
-    tbody.appendChild(fragmento);
+    tbody.appendChild(fragmento); // Adiciona todas as linhas ao corpo da tabela
   }
 
   /**

@@ -12,22 +12,22 @@ export class ControladoraReservas {
   }
 
   async criarReserva() {
-    const { nomeCliente, mesaId, data, horarioInicial, funcionarioId } =
+    const { nomeCliente, mesa, data, horarioInicial, funcionario } =
       this.visao.capturarDadosFormulario();
     try {
       // Cria o objeto de reserva
       const reserva: Reserva = {
         nomeCliente,
-        mesaId,
+        mesa,
         data,
         horarioInicial,
-        funcionarioId, // Corrected to match the destructured variable
+        funcionario,
       };
 
+      console.log(reserva);
+
       // Envia o objeto para o gestor para criar a reserva
-      const reservaCriada = await this.gestor.criarReserva(reserva);
-      console.log("Reserva criada com sucesso: ", reservaCriada);
-      this.visao.exibirReservaCriada(reserva);
+      await this.gestor.criarReserva(reserva);
     } catch (error) {
       console.error("Erro ao criar reserva:", error);
       this.visao.exibirErro(error);

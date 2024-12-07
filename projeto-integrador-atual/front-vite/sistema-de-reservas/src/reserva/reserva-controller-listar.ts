@@ -11,10 +11,10 @@ export class ControladoraListarReservas {
     this.visao = visao;
   }
 
-  async ListarReservas() {
+  async ListarReservas(): Promise<void> {
     try {
       // Realiza a requisição à API para obter as reservas
-      const reservas: ReservaListar = await this.gestor.listarReservas();
+      const reservas: ReservaListar[] = await this.gestor.listarReservas();
       // Passa os dados para a visão para exibir na tabela
       this.visao.desenharReservas(reservas);
     } catch (error) {
