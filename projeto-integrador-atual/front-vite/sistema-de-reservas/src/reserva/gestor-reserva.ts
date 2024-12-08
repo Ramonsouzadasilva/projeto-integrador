@@ -48,4 +48,27 @@ export class GestorReservas {
       throw error;
     }
   }
+
+  // Função para cancelar uma reserva (usando PUT para alterar o status da reserva)
+  async cancelarReserva(id: string): Promise<void> {
+    try {
+      const response = await fetch(`http://localhost:8000/reservas/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: "cancelado" }), // Define o status como 'cancelado'
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao cancelar a reserva");
+      }
+      window.location.reload();
+
+      // Atualiza a lista de reservas após a operação de cancelamento
+      this.listarReservas();
+    } catch (error) {
+      console.error("Erro ao cancelar reserva:", error);
+    }
+  }
 }

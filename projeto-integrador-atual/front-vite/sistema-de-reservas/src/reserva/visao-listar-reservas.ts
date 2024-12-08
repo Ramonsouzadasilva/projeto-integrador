@@ -12,49 +12,47 @@ export class VisaoListarReservas {
     this.controladoraReserva.ListarReservas();
   }
 
-  /**
-   * Desenha as reservas na tabela.
-   * @param {Reserva[]} reservas
-   */
   desenharReservas(reservas: ReservaListar[]): void {
     const tbody = document.querySelector("tbody") as HTMLElement;
-    tbody.innerText = ""; // Limpa a tabela
-    const fragmento = document.createDocumentFragment();
+    tbody.innerHTML = ""; // Limpa a tabela antes de adicionar novas linhas
 
+    const fragmento = document.createDocumentFragment();
     reservas.forEach((reserva) => {
       const linha = this.criarLinha(reserva);
-      fragmento.append(linha);
+      fragmento.appendChild(linha);
     });
 
     tbody.appendChild(fragmento); // Adiciona todas as linhas ao corpo da tabela
   }
 
-  /**
-   * Cria uma linha de tabela a partir de uma reserva.
-   * @param {Reserva} reserva
-   * @returns {HTMLTableRowElement}
-   */
   criarLinha(reserva: ReservaListar): HTMLTableRowElement {
     const tr = document.createElement("tr");
-
     tr.append(
       this.criarCelula(reserva.id),
       this.criarCelula(reserva.nomeCliente),
       this.criarCelula(reserva.mesa),
       this.criarCelula(reserva.data),
-      this.criarCelula(reserva.horarioInicial),
-      this.criarCelula(reserva.horarioTermino),
+      this.criarCelula(reserva.horaInicial),
+      this.criarCelula(reserva.horaTermino),
       this.criarCelula(reserva.nomeFuncionario),
-      this.criarCelula(reserva.status)
+      this.criarCelula(reserva.status),
+      this.criarBotaoCancelar(reserva.id)
     );
     return tr;
   }
 
-  /**
-   * Cria uma célula de tabela.
-   * @param {string} texto
-   * @returns {HTMLTableCellElement}
-   */
+  criarBotaoCancelar(id: string): HTMLButtonElement {
+    const botaoCancelar = document.createElement("button");
+    botaoCancelar.innerText = "Cancelar";
+    botaoCancelar.classList.add("btn", "btn-danger");
+    botaoCancelar.onclick = () => {
+      if (window.confirm("Tem certeza que deseja cancelar esta reserva?")) {
+        this.controladoraReserva.cancelarReserva(id);
+      }
+    }; // Adiciona a confirmação de cancelamento
+    return botaoCancelar;
+  }
+
   criarCelula(texto: string): HTMLTableCellElement {
     const td = document.createElement("td");
     td.innerText = texto;

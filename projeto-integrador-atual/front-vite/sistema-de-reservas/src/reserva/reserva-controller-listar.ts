@@ -21,4 +21,12 @@ export class ControladoraListarReservas {
       console.error("Erro ao listar reservas:", error);
     }
   }
+
+  async cancelarReserva(id: string): Promise<void> {
+    try {
+      await this.gestor.cancelarReserva(id);
+    } catch (error) {
+      console.error("Erro ao listar reservas:", error);
+    }
+  }
 }

@@ -89,6 +89,12 @@ class ReservaController
         return $res->json($reservas);
     }
 
+    public function listarTodasAsReservas($req, $res)
+    {
+        $reservas = $this->reservaRepo->listarReservas();
+        return $res->json($reservas);
+    }
+
 
     public function cancelarReserva($req, $res)
     {
